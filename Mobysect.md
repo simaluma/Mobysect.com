@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MobySet Novels</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    header {
+      background-color: #6200ea;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: white;
+      padding: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    .novel {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    .novel h2 {
+      margin: 0 0 10px;
+    }
+    .novel p {
+      margin: 0 0 10px;
+    }
+    .comment-box {
+      margin-top: 10px;
+    }
+    textarea {
+      width: 100%;
+      height: 60px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px;
+      background-color: #6200ea;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3700b3;
+    }
+    .like-dislike-buttons {
+      display: inline-flex;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>MobySet Novels</h1>
+</header>
+
+<div class="container">
+  <div class="novel">
+    <h2>Novel Title: The Silent Shadows</h2>
+    <p>Author: Moby</p>
+    <p><strong>Prologue: The Shattered Veil</strong></p>
+    <p>
+      In the beginning, there was balance. The world of men, bound by the natural laws of existence, thrived under the golden warmth of the sun. Across the Veil, a fragile barrier separating dimensions, lay the Abyss—a realm of chaos and shadow, home to entities born of hunger and malice. These were the Beasts, manifestations of raw, untamed energy, their forms ever-shifting and their minds driven by primal instincts to devour and destroy. For millennia, the Veil kept them at bay, preserving the fragile harmony of the human world.
+    </p>
+    <p>
+      But balance is a fleeting thing. The first rupture occurred centuries ago, a faint tear in the fabric of reality, born of man's insatiable thirst for power. Ancient scholars, blinded by ambition, delved into forbidden arts, seeking to harness the limitless potential of the Abyss. They called it the Fount of Eternity, a source of energy that could elevate humanity beyond mortality. Through rituals lost to time, they breached the Veil, opening a passage between worlds.
+    </p>
+    <p>
+      What they unleashed was not salvation but annihilation. The Beasts spilled forth in a tide of darkness, their forms twisting reality around them. Cities crumbled under their advance, their inhabitants torn apart or consumed in the wake of their hunger. The sky grew dark, eclipsed by storms of ash and shadow. Entire civilizations vanished, leaving behind only scorched ruins and the haunting echoes of despair.
+    </p>
+    <p>
+      The surviving scholars, wracked with guilt, sought to undo their mistake. They forged the Sealing Arks, powerful relics designed to mend the tear and banish the Beasts back to their realm. But the damage was done. The Veil, though repaired, remained weakened, its stability shattered like fractured glass.
+    </p>
+    <p>
+      From that day forward, the Beasts became a part of the world’s reality. They emerged through rifts that appeared without warning—small at first, barely enough to allow the weakest of their kind to slip through. But as the centuries passed, the rifts grew wider, their frequency increasing, each one a harbinger of devastation.
+    </p>
+    <p>
+      The people adapted. Hunters rose to defend their homes, wielding weapons imbued with abilities drawn from the remnants of the Abyssal energy left behind by the Beasts. Scavengers scoured battlefields, salvaging materials from the fallen creatures to craft tools and armaments. Cities became fortified bastions, their walls bristling with defenses against the ever-looming threat.
+    </p>
+    <p>
+      Yet, no amount of preparation could stop the inevitable. Legends spoke of the Heralds, powerful beings born of the Abyss, tasked with spreading its influence and preparing the world for the arrival of the Three Sages of Distraction. These ancient entities, revered as gods in the Abyss, sought nothing less than the complete erasure of the human world—a feast to sustain their endless hunger.
+    </p>
+    <p>
+      And so, humanity fought, their battles unending, their victories fleeting. Each generation bore the scars of the last, their hope dwindling as the shadows grew ever deeper.
+    </p>
+
+    <div class="like-dislike-buttons">
+      <button onclick="likeNovel()">Like</button>
+      <span id="like-count">0</span> likes
+      <button onclick="dislikeNovel()">Dislike</button>
+      <span id="dislike-count">0</span> dislikes
+    </div>
+    
+    <div class="comment-box">
+      <h3>Comments</h3>
+      <div id="comments"></div>
+      <textarea id="comment-input" placeholder="Add a comment..."></textarea>
+      <button onclick="addComment()">Post Comment</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let likeCount = 0;
+  let dislikeCount = 0;
+
+  // Like functionality
+  function likeNovel() {
+    if (localStorage.getItem("likedNovel") === "true") {
+      alert("You can only like this novel once.");
+    } else {
+      likeCount++;
+      document.getElementById("like-count").textContent = likeCount;
+      localStorage.setItem("likedNovel", "true");
+    }
+  }
+
+  // Dislike functionality
+  function dislikeNovel() {
+    if (localStorage.getItem("dislikedNovel") === "true") {
+      alert("You can only dislike this novel once.");
+    } else {
+      dislikeCount++;
+      document.getElementById("dislike-count").textContent = dislikeCount;
+      localStorage.setItem("dislikedNovel", "true");
+    }
+  }
+
+  // Add comment functionality
+  function addComment() {
+    const commentInput = document.getElementById("comment-input");
+    const commentText = commentInput.value.trim();
+    if (commentText !== "") {
+      const commentsDiv = document.getElementById("comments");
+
+      // Get existing comments from localStorage, if any
+      let comments = JSON.parse(localStorage.getItem("comments")) || [];
+
+      // Add new comment
+      comments.push(commentText);
+
+      // Update localStorage
+      localStorage.setItem("comments", JSON.stringify(comments));
+
+      // Display the comments
+      displayComments();
+      
+      // Clear the input
+      commentInput.value = "";
+    }
+  }
+
+  // Function to display comments
+  function displayComments() {
+    const commentsDiv = document.getElementById("comments");
+    const comments = JSON.parse(localStorage.getItem("comments")) || [];
+    commentsDiv.innerHTML = comments.map(comment => `<p>${comment}</p>`).join('');
+  }
+
+  // Display comments on page load
+  window.onload = displayComments;
+</script>
+
+</body>
+</html>
